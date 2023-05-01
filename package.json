@@ -1,0 +1,11 @@
+{
+  "name": "subgraph",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anchor-indexer/cli": "0.1.0",
+    "@anchor-indexer/ts": "0.1.0"
+  },
+  "scripts": {
+    "postinstall": "npm link @anchor-indexer/cli @anchor-indexer/ts"
+  }
+}

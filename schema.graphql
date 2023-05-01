@@ -1,0 +1,48 @@
+# #[account]
+# #[derive(Default)]
+# pub struct StakingAccount {
+#     pub admin_key: Pubkey,
+#     pub freeze_program: bool,
+#     pub authorized_creator: Pubkey,
+#     pub authorized_name_starts: Vec<String>,
+#     pub minimum_staking_period: u64,
+#     pub maximum_staking_period: u64,
+#     pub active_rewards: Vec<Pubkey>,
+# }
+
+# #[account]
+# #[derive(Default)]
+# pub struct UserStakingCounterAccount {
+#     pub counter: u32,
+# }
+
+# #[derive(AnchorSerialize, AnchorDeserialize, Copy, Clone, Default)]
+# pub struct ClaimableToken {
+#     pub nft_mint: Pubkey,
+#     pub amount: u16,
+# }
+
+type Squad @entity {
+  id: ID!
+  index: BigInt!
+  wallet: Bytes!
+  # nftMintKeys: Vec<Bytes!>,
+  # claimable: Vec<ClaimableToken>,
+  stakingAt: BigInt!
+  stakingPeriod: BigInt!
+  claimableAuryAmount: BigInt!
+  auryDeposit: BigInt!
+}
+
+type SquadReward @entity {
+  id: ID!
+  mint: Bytes!
+  amount: BigInt!
+  squad: Squad!
+}
+
+type SquadMint @entity {
+  id: ID!
+  mint: Bytes!
+  squad: String!
+}

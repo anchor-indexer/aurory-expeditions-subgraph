@@ -1,0 +1,24 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: solana/program
+    name: AOE
+    source:
+      address: 'EXpwP3pqPzA4arF8i89w7smtvxHzyYETmCpPspLPrR7J'
+      idl: AOE
+    mapping:
+      kind: solana/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Squad
+        - SquadReward
+        - SquadMint
+      idls:
+        - name: AOE
+          file: ./idls/aoe.json
+      callHandlers:
+        - function: stake
+          handler: handleStake
+      file: ./src/mapping.ts
