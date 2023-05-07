@@ -1,11 +1,11 @@
 deploy:
-	@anchor-indexer deploy aurory-aoe
+	@anchor-indexer deploy aurory-expeditions
 
 create:
-	@anchor-indexer create aurory-aoe mainnet
+	@anchor-indexer create aurory-expeditions mainnet
 
 remove:
-	@anchor-indexer remove aurory-aoe
+	@anchor-indexer remove aurory-expeditions
 
 codegen:
 	@anchor-indexer codegen
