@@ -22,27 +22,37 @@
 #     pub amount: u16,
 # }
 
+type AvailableRewardMint @entity {
+  id: ID!
+}
+
 type Squad @entity {
   id: ID!
   index: BigInt!
   wallet: Bytes!
-  # nftMintKeys: Vec<Bytes!>,
-  # claimable: Vec<ClaimableToken>,
   stakingAt: BigInt!
   stakingPeriod: BigInt!
   claimableAuryAmount: BigInt!
+  claimedAuryReward: Boolean!
   auryDeposit: BigInt!
+  closed: Boolean!
+}
+
+type User @entity {
+  id: ID! # wallet
+  counter: BigInt!
 }
 
 type SquadReward @entity {
   id: ID!
   mint: Bytes!
   amount: BigInt!
-  squad: Squad!
+  squad: Bytes!
+  claimed: Boolean!
 }
 
 type SquadMint @entity {
   id: ID!
   mint: Bytes!
-  squad: String!
+  squad: Bytes!
 }

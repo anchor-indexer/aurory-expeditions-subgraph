@@ -3,10 +3,10 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: solana/program
-    name: AOE
+    name: aoe
     source:
       address: 'EXpwP3pqPzA4arF8i89w7smtvxHzyYETmCpPspLPrR7J'
-      idl: AOE
+      idl: aoe
     mapping:
       kind: solana/events
       apiVersion: 0.0.5
@@ -16,9 +16,27 @@ dataSources:
         - SquadReward
         - SquadMint
       idls:
-        - name: AOE
+        - name: aoe
           file: ./idls/aoe.json
       callHandlers:
         - function: stake
           handler: handleStake
+        - function: unstake
+          handler: handleUnstake
+        - function: lockStake
+          handler: handleLockStake
+        - function: addReward
+          handler: handleAddReward
+        - function: removeReward
+          handler: handleRemoveReward
+        - function: addWinner
+          handler: handleAddWinner
+        - function: addAuryWinner
+          handler: handleAddAuryWinner
+        - function: claim
+          handler: handleClaim
+        - function: claimAuryReward
+          handler: handleClaimAuryReward
+        - function: closeUserStaking
+          handler: handleCloseUserStaking
       file: ./src/mapping.ts
