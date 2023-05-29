@@ -110,7 +110,6 @@ export function handleLockStake(call: LockStakeCall): void {
 
 export function handleAddReward(call: AddRewardCall): void {
   let args = call.args;
-  let accounts = call.accounts;
 
   for (let index = 0; index < args.nftMintKeys.length; index++) {
     let mint = args.nftMintKeys[index];
@@ -125,9 +124,6 @@ export function handleAddReward(call: AddRewardCall): void {
 }
 
 export function handleRemoveReward(call: RemoveRewardCall): void {
-  let args = call.args;
-  let accounts = call.accounts;
-
   let remainingAccounts = call.remainingAccounts;
 
   for (let index = 0; index < remainingAccounts.length; index++) {
@@ -135,6 +131,10 @@ export function handleRemoveReward(call: RemoveRewardCall): void {
     let rewardMint = AvailableRewardMint.load(mint.toBase58());
     if (rewardMint) {
       store.remove('AvailableRewardMint', mint.toBase58());
+    } else {
+      log.warning('remove reward: reward mint {} does not exist', [
+        mint.toBase58(),
+      ]);
     }
   }
 }
