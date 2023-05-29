@@ -67,7 +67,7 @@ export function handleUnstake(call: UnstakeCall): void {
     // let mint = nftVault.mint;
     // let squadMintId = squadId.toBase58() + '-' + mint.toBase58();
     // store.remove('SquadMint', squadMintId);
-    log.warning('unstake: not implemented yet index({})', [index.toString()]);
+    log.warning('Unstake: not implemented yet index({})', [index.toString()]);
   }
 }
 
@@ -88,11 +88,12 @@ export function handleLockStake(call: LockStakeCall): void {
   let squadId = accounts.userStakingAccount;
   let squad = Squad.load(squadId.toBase58());
   if (squad) {
-    log.error('lock stake: squad {} does exist', [squadId.toBase58()]);
+    log.error('Lock stake: squad {} does exist', [squadId.toBase58()]);
+    throw new Error('Lock stake: squad ' + squadId.toBase58() + ' does exist');
     return;
   }
 
-  log.debug('local stake: user({}) squad({})', [
+  log.debug('Lock stake: user({}) squad({})', [
     userId.toBase58(),
     squadId.toBase58(),
   ]);
@@ -118,7 +119,10 @@ export function handleAddReward(call: AddRewardCall): void {
       let rewardMint = new AvailableRewardMint(mint.toBase58());
       rewardMint.save();
     } else {
-      log.debug('add reward: reward mint {} already exists', [mint.toBase58()]);
+      log.error('Add reward: reward mint {} already exists', [mint.toBase58()]);
+      throw new Error(
+        'Add reward: reward mint ' + mint.toBase58() + '  already exists'
+      );
     }
   }
 }
@@ -132,9 +136,12 @@ export function handleRemoveReward(call: RemoveRewardCall): void {
     if (rewardMint) {
       store.remove('AvailableRewardMint', mint.toBase58());
     } else {
-      log.warning('remove reward: reward mint {} does not exist', [
+      log.error('Remove reward: reward mint {} does not exist', [
         mint.toBase58(),
       ]);
+      throw new Error(
+        'Remove reward: reward mint ' + mint.toBase58() + ' does not exist'
+      );
     }
   }
 }
@@ -176,7 +183,9 @@ export function handleAddAuryWinner(call: AddAuryWinnerCall): void {
       log.error('Add aury winner: squad {} does not exist', [
         squadId.toBase58(),
       ]);
-      return;
+      throw new Error(
+        'Add aury winner: squad ' + squadId.toBase58() + ' does not exist'
+      );
     }
     squad.claimableAuryAmount = squad.claimableAuryAmount.plus(
       BigInt.fromI32(1)
@@ -197,8 +206,10 @@ export function handleClaim(call: ClaimCall): void {
     let squadRewardId = squadId.toBase58() + '-' + mint.toBase58();
     let squadReward = SquadReward.load(squadRewardId);
     if (!squadReward) {
-      log.error('claim: squad reward {} does not exist', [squadRewardId]);
-      return;
+      log.error('Claim: squad reward {} does not exist', [squadRewardId]);
+      throw new Error(
+        'Claim: squad reward ' + squadRewardId + ' does not exist'
+      );
     }
     squadReward.claimed = true;
     squadReward.save();
@@ -212,8 +223,10 @@ export function handleClaimAuryReward(call: ClaimAuryRewardCall): void {
   let squadId = accounts.userStakingAccount;
   let squad = Squad.load(squadId.toBase58());
   if (!squad) {
-    log.error('claim aury: squad {} does not exist', [squadId.toBase58()]);
-    return;
+    log.error('Claim aury: squad {} does not exist', [squadId.toBase58()]);
+    throw new Error(
+      'Claim aury: squad ' + squadId.toBase58() + ' does not exist'
+    );
   }
 
   squad.claimedAuryReward = true;
@@ -227,8 +240,10 @@ export function handleCloseUserStaking(call: CloseUserStakingCall): void {
   let squadId = accounts.userStakingAccount;
   let squad = Squad.load(squadId.toBase58());
   if (!squad) {
-    log.error('close squad: squad {} does not exist', [squadId.toBase58()]);
-    return;
+    log.error('Close squad: squad {} does not exist', [squadId.toBase58()]);
+    throw new Error(
+      'Close squad: squad ' + squadId.toBase58() + ' does not exist'
+    );
   }
 
   squad.closed = true;
